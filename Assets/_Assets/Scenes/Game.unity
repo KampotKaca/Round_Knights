@@ -313,7 +313,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveIdentifier: Default_Game
   <EnvironmentParent>k__BackingField: {fileID: 742316918}
-  <TeamsParent>k__BackingField: {fileID: 1657052874}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,8 +459,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1657052874}
+  - component: {fileID: 1657052875}
   m_Layer: 0
-  m_Name: Teams
+  m_Name: Tribes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,6 +482,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1657052875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657052873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191f899f3c8f29b4ca12b53e74b4fc3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: f8051bc02708cb24989c70f45ea1ac08, type: 2}
 --- !u!1 &2117128876
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,5 +566,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 2117128877}
   - {fileID: 2137304640}
-  - {fileID: 742316918}
   - {fileID: 1657052874}
+  - {fileID: 742316918}

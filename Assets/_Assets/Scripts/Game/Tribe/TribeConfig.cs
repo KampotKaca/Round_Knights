@@ -8,6 +8,6 @@ namespace RoundKnights
     [CreateAssetMenu(menuName = "RoundKnights/Tribe/Tribe", fileName = "Tribe_Config")]
     public class TribeConfig : ScriptableObject
     {
-        [field: SerializeField] public string TribeNames { get; private set; } = "Tribe";
+        
     }
 }

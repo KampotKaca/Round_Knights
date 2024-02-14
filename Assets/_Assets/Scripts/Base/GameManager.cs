@@ -7,13 +7,13 @@ namespace RoundKnights
     {
         [SerializeField] string saveIdentifier = "Level";
         [field: SerializeField] public Transform EnvironmentParent { get; private set; }
-        [field: SerializeField] public Transform TeamsParent { get; private set; }
 
         void Awake()
         {
             SaveManager.SearchParents.Clear();
             SaveManager.SearchParents.Add(EnvironmentParent);
             SaveManager.Additionals.Clear();
+            SaveManager.Additionals.Add(TribesManager.Instance);
             
             SaveManager.LoadAll(saveIdentifier);
         }
@@ -24,6 +24,7 @@ namespace RoundKnights
             SaveManager.SearchParents.Clear();
             SaveManager.SearchParents.Add(EnvironmentParent);
             SaveManager.Additionals.Clear();
+            SaveManager.Additionals.Add(TribesManager.Instance);
             
             SaveManager.SaveAll(saveIdentifier);
         }

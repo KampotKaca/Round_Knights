@@ -6,22 +6,12 @@ namespace RoundKnights
 {
     public enum ResourceType { Gold, Meat, Wood, Stone }
 
-    public class ResourceBlock : MonoBehaviour, ISavedObject
+    public class ResourceBlock : MonoBehaviour
     {
-        [Serializable]
-        public struct StartingResource
-        {
-            public ResourceType Type;
-            public ulong StartingAmount;
-            public ulong StartingLimit;
-        }
-
         void Awake()
         {
             FillLists();
         }
-
-        [SerializeField] List<StartingResource> resources;
 
         public class Resource
         {
@@ -136,7 +126,7 @@ namespace RoundKnights
         }
         
         [Serializable]
-        public class ResourceBlockSave
+        public struct SaveFile
         {
             public ResourceSave[] SavedResources;
         }
@@ -149,28 +139,13 @@ namespace RoundKnights
             public ulong Limit;
         }
 
-        public Type FileType => typeof(ResourceBlockSave);
-        public int Queue => (int)SaveFileQueue.Skip;
-        public string SaveFileIdentifier => "Resource_Save";
-        public void LoadDefault()
+        public void Load(SaveFile saveFile)
         {
             FillLists();
 
-            for (int i = 0; i < resources.Count; i++)
+            for (int i = 0; i < saveFile.SavedResources.Length; i++)
             {
-                m_Resources[(int)resources[i].Type].Amount = resources[i].StartingAmount;
-                m_Resources[(int)resources[i].Type].Limit = resources[i].StartingLimit;
-            }
-        }
-
-        public void LoadFromSaveFile(object saveFile)
-        {
-            FillLists();
-
-            var save = (ResourceBlockSave)saveFile;
-            for (int i = 0; i < save.SavedResources.Length; i++)
-            {
-                var current = save.SavedResources[i];
+                var current = saveFile.SavedResources[i];
                 if (Enum.TryParse(current.Identifier, out ResourceType type))
                 {
                     m_Resources[(int)type].Amount = current.Amount;
@@ -180,9 +155,9 @@ namespace RoundKnights
             }
         }
 
-        public void PopulateSaveFile(object saveFile)
+        public SaveFile GetSaveFile()
         {
-            var save = (ResourceBlockSave)saveFile;
+            SaveFile save = new();
             int size = Enum.GetValues(typeof(ResourceType)).Length;
             save.SavedResources = new ResourceSave[size];
 
@@ -196,6 +171,8 @@ namespace RoundKnights
                     Limit = Limit(type)
                 };
             }
+
+            return save;
         }
         
         #endregion

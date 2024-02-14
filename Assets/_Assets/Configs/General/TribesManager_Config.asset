@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f723504366956b44ebd91244fbc760a5, type: 3}
+  m_Name: TribesManager_Config
+  m_EditorClassIdentifier: 
+  tribeTemplates:
+  - {fileID: 4033724136406852853, guid: 7be940d4edabbd146bec56e799aa1bb7, type: 3}
+  tribeInitialConditions:
+  - IdentifierKey: 
+    TribeName: Tribe
+    Resources:
+      SavedResources:
+      - Identifier: Gold
+        Amount: 100
+        Limit: 0
+      - Identifier: Wood
+        Amount: 100
+        Limit: 0
+      - Identifier: Meat
+        Amount: 100
+        Limit: 0
+      - Identifier: Stone
+        Amount: 100
+        Limit: 0
