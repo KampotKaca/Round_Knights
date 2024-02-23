@@ -6,6 +6,8 @@ namespace RoundKnights
 {
     public class EntityBlock : MonoBehaviour
     {
+        
+        
         #region Save&Load
 
         [System.Serializable]
