@@ -16,4 +16,4 @@ MonoBehaviour:
   <MovementConfig>k__BackingField: {fileID: 11400000, guid: a772f78f8e5ce1e409c8dca315609b32, type: 2}
   <DisplayName>k__BackingField: Spearman
   <Description>k__BackingField: Default fighting entity
-  <Prefab>k__BackingField: {fileID: 0}
+  <Prefab>k__BackingField: {fileID: 5703602451126235516, guid: c728a39e3d3f1434da62212dca8a2d6b, type: 3}
