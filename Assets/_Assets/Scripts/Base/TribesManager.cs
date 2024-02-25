@@ -31,21 +31,23 @@ namespace RoundKnights
             var template = config.TribeTemplate;
             var tribe = Instantiate(template, transform);
             tribe.Load(saveFile);
+            m_Tribes.Add(tribe);
         }
 
         public Tribe FindTribeBy(Predicate<Tribe> condition) => m_Tribes.Find(condition);
         #endregion
         
         #region Save&Load
+        public Type FileType => typeof(SaveFile);
+        public int Queue => (int)SaveFileQueue.Late;
+        public string SaveFileIdentifier => "Tribes_Manager";
+        
         [Serializable]
-        public class SaveFile
+        public struct SaveFile
         {
             public Tribe.SaveFile[] Tribes;
         }
         
-        public Type FileType => typeof(SaveFile);
-        public int Queue => (int)SaveFileQueue.Late;
-        public string SaveFileIdentifier => "Tribes_Manager";
         public void LoadDefault()
         {
             CreateTribe();
@@ -57,11 +59,14 @@ namespace RoundKnights
             foreach (var tribe in save.Tribes) CreateTribe(tribe);
         }
 
-        public void PopulateSaveFile(object saveFile)
+        public object GetSaveFile()
         {
-            var save = (SaveFile)saveFile;
-            save.Tribes = new Tribe.SaveFile[m_Tribes.Count];
+            var save = new SaveFile
+            {
+                Tribes = new Tribe.SaveFile[m_Tribes.Count]
+            };
             for (int i = 0; i < m_Tribes.Count; i++) save.Tribes[i] = m_Tribes[i].GetSaveFile();
+            return save;
         }
         #endregion
     }

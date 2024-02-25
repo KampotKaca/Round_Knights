@@ -7,9 +7,9 @@ namespace RoundKnights
     public class Tribe : MonoBehaviour
     {
         [field: SerializeField, InlineEditor] public TribeConfig Config { get; private set; }
-        [field: SerializeField] public ResourceBlock ResourceBlock { get; private set; }
-        [field: SerializeField] public BuildingBlock BuildingBlock { get; private set; }
-        [field: SerializeField] public EntityBlock EntityBlock { get; private set; }
+        public ResourceBlock ResourceBlock { get; private set; }
+        public BuildingBlock BuildingBlock { get; private set; }
+        public EntityBlock EntityBlock { get; private set; }
 
         #region Save&Load
         [Serializable]
@@ -31,6 +31,10 @@ namespace RoundKnights
             TribeName = saveFile.TribeName;
 
             name = TribeName;
+
+            ResourceBlock = GetComponent<ResourceBlock>();
+            BuildingBlock = GetComponent<BuildingBlock>();
+            EntityBlock = GetComponent<EntityBlock>();
             
             ResourceBlock.Load(saveFile.Resources);
             BuildingBlock.Load(saveFile.Buildings);

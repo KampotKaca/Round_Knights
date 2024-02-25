@@ -22,4 +22,16 @@ namespace RoundKnights
             };
         }
     }
+    
+    [Serializable]
+    public struct Vec3SaveFile
+    {
+        float[] val;
+
+        public Vector3 Value
+        {
+            get => new(val[0], val[1], val[2]);
+            set => val = new[] { value.x, value.y, value.z };
+        }
+    }
 }

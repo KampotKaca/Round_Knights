@@ -10,23 +10,24 @@ namespace RoundKnights
 
         void Awake()
         {
-            SaveManager.SearchParents.Clear();
-            SaveManager.SearchParents.Add(EnvironmentParent);
-            SaveManager.Additionals.Clear();
-            SaveManager.Additionals.Add(TribesManager.Instance);
-            
+            PopulateSaves();
             SaveManager.LoadAll(saveIdentifier);
         }
 
         [Button]
         void Save()
         {
+            PopulateSaves();
+            SaveManager.SaveAll(saveIdentifier);
+        }
+
+        void PopulateSaves()
+        {
             SaveManager.SearchParents.Clear();
             SaveManager.SearchParents.Add(EnvironmentParent);
             SaveManager.Additionals.Clear();
             SaveManager.Additionals.Add(TribesManager.Instance);
-            
-            SaveManager.SaveAll(saveIdentifier);
+            SaveManager.Additionals.Add(CameraManager.Instance);
         }
     }
 }

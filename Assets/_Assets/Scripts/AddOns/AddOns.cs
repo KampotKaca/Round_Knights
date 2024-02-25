@@ -9,8 +9,8 @@ namespace RoundKnights
     {
         public static bool ToBool(this int val) => val == 1;
 
-        public static Vector2 TOV2(this Vector3 v3) => new Vector2(v3.x, v3.z);
-        public static Vector3 ToV3(this Vector2 v2) => new Vector3(v2.x, 0f, v2.y);
+        public static Vector2 TOV2(this Vector3 v3) => new(v3.x, v3.z);
+        public static Vector3 ToV3(this Vector2 v2) => new(v2.x, 0f, v2.y);
 
         public static float XzSqrMagnitude(this Vector3 v)
             => v.x * v.x + v.z * v.z;
@@ -71,20 +71,6 @@ namespace RoundKnights
                 y = v1.y / v2.y,
                 z = v1.z / v2.z,
             };
-        }
-
-        public static Vector3 WorldPositionToCanvasPosition
-        (this Canvas i_TargetCanvas, Vector3 i_WorldPosition, Camera cam)
-        {
-            return i_TargetCanvas.ScreenToCanvasPoint(cam.WorldToScreenPoint(i_WorldPosition));
-        }
-
-        public static Vector3 ScreenToCanvasPoint
-            (this Canvas i_TargetCanvas, Vector3 i_ScreenPosition)
-        {
-            float x = i_ScreenPosition.x - (Screen.width / 2f);
-            float y = i_ScreenPosition.y - (Screen.height / 2f);
-            return new Vector2(x, y) / i_TargetCanvas.scaleFactor;
         }
     }
 }

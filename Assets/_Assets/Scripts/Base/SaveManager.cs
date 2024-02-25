@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 #if !UNITY_EDITOR
 using System.Runtime.Serialization.Formatters.Binary;
@@ -15,8 +18,8 @@ namespace RoundKnights
         [Serializable]
         public struct SaveFile
         {
-            public string Identifier;
-            public string Content;
+            public string Id;
+            public string Cont;
         }
         
         [Serializable]
@@ -30,6 +33,22 @@ namespace RoundKnights
         public static readonly HashSet<Transform> SearchParents = new();
         public static readonly HashSet<ISavedObject> Additionals = new();
 
+        [MenuItem("Tools/DeleteSaves")]
+        static void DeleteAllSaves()
+        {
+            var files = Directory.GetFiles(Application.persistentDataPath);
+            foreach (string file in files) File.Delete(file);
+        }
+        
+        [MenuItem("Tools/OpenSavePath")]
+        static void OpenSavePath()
+        {
+            if (!Directory.Exists(Application.persistentDataPath))
+                Directory.CreateDirectory(Application.persistentDataPath);
+
+            Process.Start(Application.persistentDataPath);
+        }
+        
         static ISavedObject[] GetResults()
         {
             List<ISavedObject> results = new();
@@ -72,7 +91,7 @@ namespace RoundKnights
                 
                 Dictionary<string, string> dic = new();
                 for (int i = 0; i < saveData.Files.Length; i++)
-                    dic.Add(saveData.Files[i].Identifier, saveData.Files[i].Content);
+                    dic.Add(saveData.Files[i].Id, saveData.Files[i].Cont);
                 
                 foreach (var savedObject in saveObjects)
                 {
@@ -99,17 +118,19 @@ namespace RoundKnights
 
             Dictionary<string, string> data = new();
 
-            foreach (var savedObject in saveObjects)
+            foreach (var so in saveObjects)
             {
-                if (data.ContainsKey(savedObject.SaveFileIdentifier))
+#if UNITY_EDITOR
+                if (data.ContainsKey(so.SaveFileIdentifier))
                 {
-                    Debug.LogError($"Trying to insert key twice {savedObject.SaveFileIdentifier}");
+                    Debug.LogError($"Trying to insert key twice {so.SaveFileIdentifier}");
                     continue;
                 }
-
-                object saveFile = Activator.CreateInstance(savedObject.FileType);
-                savedObject.PopulateSaveFile(saveFile);
-                data.Add(savedObject.SaveFileIdentifier, JsonUtility.ToJson(saveFile, true));
+#endif
+                var save = so.GetSaveFile();
+                if(save == null) continue;
+                string json = JsonUtility.ToJson(save);
+                data.Add(so.SaveFileIdentifier, json);
             }
 
             SaveData saveData = new()
@@ -122,18 +143,21 @@ namespace RoundKnights
             {
                 saveData.Files[id] = new SaveFile
                 {
-                    Identifier = pair.Key,
-                    Content = pair.Value
+                    Id = pair.Key,
+                    Cont = pair.Value
                 };
+                id++;
             }
 
             string path = GetPath(identifier);
+            
             FileStream file = new(path, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
-
+            
 #if UNITY_EDITOR
             using(StreamWriter stream = new(file))
             {
-                stream.Write(JsonUtility.ToJson(saveData, true));
+                var json = JsonUtility.ToJson(saveData);
+                stream.WriteAsync(json);
             };
 #else
             BinaryFormatter formatter = new();
@@ -161,6 +185,6 @@ namespace RoundKnights
         public string SaveFileIdentifier { get; }
         public void LoadDefault();
         public void LoadFromSaveFile(object saveFile);
-        public void PopulateSaveFile(object saveFile);
+        public object GetSaveFile();
     }
 }

@@ -94,6 +94,10 @@ namespace RoundKnights
             Trs.eulerAngles = saveFile.Trs.Euler;
 
             Agent = GetComponent<NavMeshAgent>();
+
+            Agent.speed = Config.Speed;
+            Agent.acceleration = Config.Acceleration;
+            Agent.angularSpeed = Config.AngularSpeed;
         }
 
         public SaveFile GetSaveFile()
