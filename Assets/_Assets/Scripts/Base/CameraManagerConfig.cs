@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class CameraManagerConfig : MonoBehaviour
+namespace RoundKnights
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(menuName = "RoundKnights/General/Camera", fileName = "Camera_Config")]
+    public class CameraManagerConfig : ScriptableObject
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [field: SerializeField, FoldoutGroup("Controls")] public float MoveSpeedPerDistance  { get; private set; } = 1.2f;
+        [field: SerializeField, FoldoutGroup("Controls")] public float PitchSpeed { get; private set; } = 5f;
+        [field: SerializeField, FoldoutGroup("Controls")] public float YawSpeed   { get; private set; } = 5f;
+        [field: SerializeField, FoldoutGroup("Controls")] public float ZoomSpeed  { get; private set; } = 5f;
     }
 }

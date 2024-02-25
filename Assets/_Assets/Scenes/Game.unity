@@ -454,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveIdentifier: Default_Game
   <EnvironmentParent>k__BackingField: {fileID: 742316918}
+  inputReader: {fileID: 11400000, guid: f2a46e059c743e744a1026f27c3e07c5, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,6 +468,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -604,13 +606,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4eb7cf5f22471b499cd8ddf346a44d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MainCamera>k__BackingField: {fileID: 963194227}
+  inputReader: {fileID: 11400000, guid: f2a46e059c743e744a1026f27c3e07c5, type: 2}
+  Camera: {fileID: 963194231}
+  config: {fileID: 11400000, guid: a12aa2a62d32c904ea260865453cd8b4, type: 2}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 028cc8f7ce0d600428566840053bb81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   defaultYaw: 45
   defaultPitch: 50
   defaultDistance: 5
   offset: {x: 0, y: -0.7}
   pitchLimit: {x: 25, y: 75}
-  distanceLimit: {x: 5, y: 30}
+  distanceLimit: {x: 2, y: 80}
 --- !u!1 &1657052873
 GameObject:
   m_ObjectHideFlags: 0

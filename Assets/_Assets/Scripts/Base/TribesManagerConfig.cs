@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RoundKnights
 {
-    [CreateAssetMenu(menuName = "RoundKnights/Tribe/TribesManager", fileName = "TribesManager_Config")]
+    [CreateAssetMenu(menuName = "RoundKnights/General/TribesManager", fileName = "TribesManager_Config")]
     public class TribesManagerConfig : ScriptableObject
     {
         public Tribe TribeTemplate => tribeTemplates[Random.Range(0, tribeTemplates.Length)];

@@ -26,12 +26,12 @@ namespace RoundKnights
     [Serializable]
     public struct Vec3SaveFile
     {
-        float[] val;
+        public float[] Val;
 
-        public Vector3 Value
+        public Vector3 Value => new(Val[0], Val[1], Val[2]);
+        public void SetValue(Vector3 v3)
         {
-            get => new(val[0], val[1], val[2]);
-            set => val = new[] { value.x, value.y, value.z };
+            Val = new[] { v3.x, v3.y, v3.z };
         }
     }
 }

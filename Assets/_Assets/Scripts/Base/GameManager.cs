@@ -7,9 +7,11 @@ namespace RoundKnights
     {
         [SerializeField] string saveIdentifier = "Level";
         [field: SerializeField] public Transform EnvironmentParent { get; private set; }
-
+        [field: SerializeField] InputReader inputReader;
+        
         void Awake()
         {
+            inputReader.ResetEvents();
             PopulateSaves();
             SaveManager.LoadAll(saveIdentifier);
         }
