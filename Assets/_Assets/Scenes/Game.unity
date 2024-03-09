@@ -385,6 +385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 742316918}
+  - component: {fileID: 742316919}
   m_Layer: 0
   m_Name: Enviroment
   m_TagString: Untagged
@@ -408,6 +409,20 @@ Transform:
   - {fileID: 59935596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &742316919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742316917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c18d091f9f82b74cb07ef1a7228bea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSize: {x: 11, y: 11}
+  additionalSize: {x: 8, y: 8}
 --- !u!1 &923220214
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +468,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveIdentifier: Default_Game
-  <EnvironmentParent>k__BackingField: {fileID: 742316918}
   inputReader: {fileID: 11400000, guid: f2a46e059c743e744a1026f27c3e07c5, type: 2}
 --- !u!1 &963194225
 GameObject:
@@ -609,6 +623,8 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: f2a46e059c743e744a1026f27c3e07c5, type: 2}
   Camera: {fileID: 963194231}
   config: {fileID: 11400000, guid: a12aa2a62d32c904ea260865453cd8b4, type: 2}
+  drawGizmo: 1
+  gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0

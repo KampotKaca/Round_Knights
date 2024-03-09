@@ -6,7 +6,6 @@ namespace RoundKnights
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField] string saveIdentifier = "Level";
-        [field: SerializeField] public Transform EnvironmentParent { get; private set; }
         [field: SerializeField] InputReader inputReader;
         
         void Awake()
@@ -14,6 +13,7 @@ namespace RoundKnights
             inputReader.ResetEvents();
             PopulateSaves();
             SaveManager.LoadAll(saveIdentifier);
+            Environment.Instance.Load();
         }
 
         [Button]
@@ -26,7 +26,7 @@ namespace RoundKnights
         void PopulateSaves()
         {
             SaveManager.SearchParents.Clear();
-            SaveManager.SearchParents.Add(EnvironmentParent);
+            SaveManager.SearchParents.Add(Environment.Instance.transform);
             SaveManager.Additionals.Clear();
             SaveManager.Additionals.Add(TribesManager.Instance);
             SaveManager.Additionals.Add(CameraManager.Instance);

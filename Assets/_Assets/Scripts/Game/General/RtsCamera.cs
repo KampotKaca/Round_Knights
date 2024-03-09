@@ -6,13 +6,19 @@ namespace RoundKnights
 {
     public class RtsCamera : MonoBehaviour
     {
-        [SerializeField, FoldoutGroup("Defaults"), Range(0, 360f)] float defaultYaw = 45f;
-        [SerializeField, FoldoutGroup("Defaults"), Range(0, 180f)] float defaultPitch = 50f;
-        [SerializeField, FoldoutGroup("Defaults"), Range(5f, 80f)] float defaultDistance = 5f;
+        [SerializeField, FoldoutGroup("Defaults"), BoxGroup("Defaults/Group", ShowLabel = false), Range(0, 360f)] 
+        float defaultYaw = 45f;
+        [SerializeField, BoxGroup("Defaults/Group"), Range(0, 180f)] 
+        float defaultPitch = 50f;
+        [SerializeField, BoxGroup("Defaults/Group"), Range(5f, 80f)] 
+        float defaultDistance = 5f;
         
-        [SerializeField, FoldoutGroup("Limits")] Vector2 offset = new(0f, -.7f);
-        [SerializeField, FoldoutGroup("Limits")] Vector2 pitchLimit = new(25f, 75f);
-        [SerializeField, FoldoutGroup("Limits")] Vector2 distanceLimit = new(2f, 80f);
+        [SerializeField, FoldoutGroup("Limits"), BoxGroup("Limits/Group", ShowLabel = false)] 
+        Vector2 offset = new(0f, -.7f);
+        [SerializeField, BoxGroup("Limits/Group")] 
+        Vector2 pitchLimit = new(25f, 75f);
+        [SerializeField, BoxGroup("Limits/Group")] 
+        Vector2 distanceLimit = new(2f, 80f);
         
         #region Controls
         float m_Pitch;
