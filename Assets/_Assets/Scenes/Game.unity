@@ -806,7 +806,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -712631045867808456, guid: 911ff6adffdfc8642a960e3f47582cda, type: 3}
-  m_Color: {r: 0.20948052, g: 1, b: 0, a: 0.652}
+  m_Color: {r: 0.20948052, g: 1, b: 0, a: 0.637}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FillImage: {fileID: 1599998847}
-  m_FillAmount: 0.652
+  m_FillAmount: 0.637
 --- !u!1 &1657052873
 GameObject:
   m_ObjectHideFlags: 0
