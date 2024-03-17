@@ -7,11 +7,11 @@ namespace RoundKnights
     {
         [SerializeField] string saveIdentifier = "Level";
         [field: SerializeField] InputReader inputReader;
-        
-        void Awake()
+
+        protected override void OnAwakeEvent()
         {
             inputReader.ResetEvents();
-            PopulateSaves();
+            populateSaves();
             SaveManager.LoadAll(saveIdentifier);
             Environment.Instance.Load();
         }
@@ -19,11 +19,11 @@ namespace RoundKnights
         [Button]
         void Save()
         {
-            PopulateSaves();
+            populateSaves();
             SaveManager.SaveAll(saveIdentifier);
         }
 
-        void PopulateSaves()
+        void populateSaves()
         {
             SaveManager.SearchParents.Clear();
             SaveManager.SearchParents.Add(Environment.Instance.transform);

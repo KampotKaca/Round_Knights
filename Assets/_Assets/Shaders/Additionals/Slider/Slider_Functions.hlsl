@@ -4,7 +4,7 @@
 void slide_float(const float frag_pos, const float size, const float fill_amount, out float alpha)
 {
 	float perc = frag_pos / size;
-	if(fill_amount > perc) alpha = (1 / fill_amount);
+	if(fill_amount > 0.001 && fill_amount >= perc) alpha = (1 / fill_amount);
 	else alpha = 0;
 }
 

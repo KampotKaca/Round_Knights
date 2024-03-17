@@ -5,41 +5,6 @@ using UnityEngine;
 
 namespace RoundKnights
 {
-    public struct Bounds2D
-    {
-        public Vector2 Center;
-        public Vector2 Size;
-
-        public Vector2 LeftEdge => Center - new Vector2(Size.x * .5f, 0);
-        public Vector2 RightEdge => Center + new Vector2(Size.x * .5f, 0);
-        public Vector2 DownEdge => Center - new Vector2(0, Size.y * .5f);
-        public Vector2 UpEdge => Center + new Vector2(0, Size.y * .5f);
-        
-        public Vector2 LeftLowerCorner => Center - Size * .5f;
-        public Vector2 RightUpperCorner => Center + Size * .5f;
-        
-        public bool Contains(Vector3 pos) => Contains(new Vector2(pos.x, pos.z));
-
-        public bool Contains(Vector2 pos)
-        {
-            Vector2 left = LeftLowerCorner, right = RightUpperCorner;
-            return pos.x >= left.x && pos.x <= right.x && pos.y >= left.y && pos.y <= right.y;
-        }
-
-        public Vector2 Clamp(Vector2 pos)
-        {
-            Vector2 left = LeftLowerCorner, right = RightUpperCorner;
-            return new Vector2(Mathf.Clamp(pos.x, left.x, right.x), 
-                               Mathf.Clamp(pos.y, left.y, right.y));
-        }
-
-        public Vector3 Clamp(Vector3 pos)
-        {
-            var newPos = Clamp(new Vector2(pos.x, pos.z));
-            return new Vector3(newPos.x, pos.y, newPos.y);
-        }
-    }
-    
     public class CameraManager : Singleton<CameraManager>, ISavedObject
     {
         [SerializeField, FoldoutGroup("General"), BoxGroup("General/Group", ShowLabel = false)] 
@@ -161,7 +126,7 @@ namespace RoundKnights
         {
             Camera.Distance += zoom * config.ZoomSpeed * Time.deltaTime;
         }
-
+        
         void Update()
         {
             Camera.Target.position = GetTargetPosition();
@@ -223,5 +188,40 @@ namespace RoundKnights
 #endif
 
         #endregion
+    }
+    
+    public struct Bounds2D
+    {
+        public Vector2 Center;
+        public Vector2 Size;
+
+        public Vector2 LeftEdge => Center - new Vector2(Size.x * .5f, 0);
+        public Vector2 RightEdge => Center + new Vector2(Size.x * .5f, 0);
+        public Vector2 DownEdge => Center - new Vector2(0, Size.y * .5f);
+        public Vector2 UpEdge => Center + new Vector2(0, Size.y * .5f);
+        
+        public Vector2 LeftLowerCorner => Center - Size * .5f;
+        public Vector2 RightUpperCorner => Center + Size * .5f;
+        
+        public bool Contains(Vector3 pos) => Contains(new Vector2(pos.x, pos.z));
+
+        public bool Contains(Vector2 pos)
+        {
+            Vector2 left = LeftLowerCorner, right = RightUpperCorner;
+            return pos.x >= left.x && pos.x <= right.x && pos.y >= left.y && pos.y <= right.y;
+        }
+
+        public Vector2 Clamp(Vector2 pos)
+        {
+            Vector2 left = LeftLowerCorner, right = RightUpperCorner;
+            return new Vector2(Mathf.Clamp(pos.x, left.x, right.x), 
+                Mathf.Clamp(pos.y, left.y, right.y));
+        }
+
+        public Vector3 Clamp(Vector3 pos)
+        {
+            var newPos = Clamp(new Vector2(pos.x, pos.z));
+            return new Vector3(newPos.x, pos.y, newPos.y);
+        }
     }
 }

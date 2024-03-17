@@ -57,7 +57,7 @@ namespace RoundKnights
 
         public void OnCamera_Zoom(InputAction.CallbackContext context)
         {
-            On_CameraZoom?.Invoke(context.ReadValue<Vector2>().y);
+            On_CameraZoom?.Invoke(-context.ReadValue<Vector2>().y);
         }
 
         public void OnCamera_Rotate(InputAction.CallbackContext context)

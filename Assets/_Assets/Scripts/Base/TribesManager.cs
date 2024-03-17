@@ -12,6 +12,14 @@ namespace RoundKnights
         
         #region Tribes
 
+        public override void Start()
+        {
+            base.Start();
+            ResourcesDisplayManager.Instance.DisplayBlock(PlayerTribe.ResourceBlock);
+        }
+
+        public Tribe PlayerTribe => m_Tribes[0];
+        
         readonly List<Tribe> m_Tribes = new();
 
         void CreateTribe()
