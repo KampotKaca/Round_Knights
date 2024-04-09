@@ -11,25 +11,30 @@ namespace RoundKnights
         /// <summary>
         /// Amount Is Percent!!!
         /// </summary>
+        [FoldoutGroup("Info"), BoxGroup("Info/Group", ShowLabel = false), ShowInInspector, ReadOnly, ProgressBar(0, 1)] 
         public float Current { get; private set; }
-        public bool IsEmpty => Mathf.Approximately(Current, 0);
-        public bool IsFull => Mathf.Approximately(Current, 1);
         
-        /// <summary>
-        /// Amount Is Number
-        /// </summary>
-        public float CurrentAmount => Current * Config.Limit;
-
         void Update()
         {
             Current += Mathf.Max(1 - Current, Config.RegenerationSpeed * Time.deltaTime / Config.Limit);
         }
-
-        #region Damage&Mend
-        public event Action<float> e_OnStatChange;
-        public event Action e_OnEmpty;
-        public event Action e_OnFull;
         
+        #region Info
+        /// <summary>
+        /// Amount Is Number
+        /// </summary>
+        [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public float CurrentAmount => Current * Config.Limit;
+        [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public bool IsEmpty => Mathf.Approximately(Current, 0);
+        [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public bool IsFull => Mathf.Approximately(Current, 1);
+        
+        #endregion
+
+        #region Damage&Heal
+        public event Action<float> On_StatChange;
+        public event Action On_Empty;
+        public event Action On_Full;
+        
+        [BoxGroup("Info/Group"), Button]
         public bool Damage(float amount)
         {
 #if UNITY_EDITOR
@@ -50,16 +55,17 @@ namespace RoundKnights
             Current -= damagePAmount;
             if (IsEmpty)
             {
-                e_OnEmpty?.Invoke();
+                On_Empty?.Invoke();
                 return true;
             }
 
-            e_OnStatChange?.Invoke(-damagePAmount * Config.Limit);
+            On_StatChange?.Invoke(-damagePAmount * Config.Limit);
 
             return false;
         }
 
-        public bool Mend(float amount)
+        [BoxGroup("Info/Group"), Button]
+        public bool Heal(float amount)
         {
 #if UNITY_EDITOR
             if (amount <= 0)
@@ -79,15 +85,16 @@ namespace RoundKnights
             Current += mendPAmount;
             if (IsFull)
             {
-                e_OnFull?.Invoke();
+                On_Full?.Invoke();
                 return true;
             }
 
-            e_OnStatChange?.Invoke(mendPAmount * Config.Limit);
+            On_StatChange?.Invoke(mendPAmount * Config.Limit);
 
             return false;
         }
         #endregion
+        
         #region Save&Load
 
         [Serializable]
@@ -97,6 +104,11 @@ namespace RoundKnights
         }
 
         protected virtual Type SaveFileType => typeof(SaveFile);
+        
+        public void Load()
+        {
+            Current = 1;
+        }
         
         public void Load(SaveFile saveFile)
         {

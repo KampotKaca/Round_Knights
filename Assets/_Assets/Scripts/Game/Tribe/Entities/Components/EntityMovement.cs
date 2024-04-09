@@ -59,22 +59,20 @@ namespace RoundKnights
                 yield return new WaitForSeconds(DELTA_TIME);
             }
             
-            IsMoving = false;
+            m_OnComplete?.Invoke();
+            Terminate();
         }
 
         public void Terminate()
         {
-            if (IsMoving)
-            {
-                IsMoving = false;
-                Agent.ResetPath();
-                m_OnComplete = null;
-                if (m_OnCancel != null)
-                {
-                    m_OnCancel.Invoke();
-                    m_OnCancel = null;
-                }
-            }
+            if (!IsMoving) return;
+            IsMoving = false;
+            Agent.ResetPath();
+            m_OnComplete = null;
+            
+            if (m_OnCancel == null) return;
+            m_OnCancel.Invoke();
+            m_OnCancel = null;
         }
         
         #region Save&Load
@@ -87,17 +85,16 @@ namespace RoundKnights
             public TransformSaveFile Trs;
         }
         
+        public void Load()
+        {
+            collect();
+        }
+        
         public void Load(ref SaveFile saveFile)
         {
-            Trs = transform;
+            collect();
             Trs.position = saveFile.Trs.Position;
             Trs.eulerAngles = saveFile.Trs.Euler;
-
-            Agent = GetComponent<NavMeshAgent>();
-
-            Agent.speed = Config.Speed;
-            Agent.acceleration = Config.Acceleration;
-            Agent.angularSpeed = Config.AngularSpeed;
         }
 
         public SaveFile GetSaveFile()
@@ -107,6 +104,16 @@ namespace RoundKnights
             return saveFile;
         }
 
+        void collect()
+        {
+            Trs = transform;
+            Agent = GetComponent<NavMeshAgent>();
+
+            Agent.speed = Config.Speed;
+            Agent.acceleration = Config.Acceleration;
+            Agent.angularSpeed = Config.AngularSpeed;
+        }
+        
         #endregion
     }
 }

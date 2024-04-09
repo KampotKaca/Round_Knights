@@ -32,7 +32,10 @@ namespace RoundKnights
             DisplayedBlock = block;
 
             for (int i = 0; i < m_Displays.Count; i++)
+            {
                 m_Displays[i].Reload(DisplayedBlock, (ResourceType)i);
+                m_Displays[i].name = $"ResourceDisplay_{(ResourceType)i}";
+            }
         }
     }
 }

@@ -31,16 +31,16 @@ namespace RoundKnights
         {
             if (m_Resource != null)
             {
-                m_Resource.e_OnResourceChanged -= onResourceChanged;
-                m_Resource.e_OnLimitChanged -= onLimitChanged;
+                m_Resource.On_ResourceChanged -= onResourceChanged;
+                m_Resource.On_LimitChanged -= onLimitChanged;
             }
         }
         
         void setEvents()
         {
             m_Resource = m_Block.GetResource(m_Type);
-            m_Resource.e_OnResourceChanged += onResourceChanged;
-            m_Resource.e_OnLimitChanged += onLimitChanged;
+            m_Resource.On_ResourceChanged += onResourceChanged;
+            m_Resource.On_LimitChanged += onLimitChanged;
         }
         
         void OnDestroy()
@@ -62,7 +62,7 @@ namespace RoundKnights
 
         void updateVisual()
         {
-            m_AmountText.text = m_Resource.Amount.ToString();
+            m_AmountText.text = m_Resource.Amount.ToShort();
         }
     }
 }

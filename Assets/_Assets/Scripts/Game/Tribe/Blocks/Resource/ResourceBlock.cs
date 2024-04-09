@@ -8,9 +8,15 @@ namespace RoundKnights
 {
     public class ResourceBlock : MonoBehaviour
     {
+        [Serializable]
+        public struct InitialCondition
+        {
+            public Resource.InitialCondition[] Resources;
+        }
+        
         [ShowInInspector, ReadOnly, PropertyOrder(100)]
         List<Resource> m_Resources = new();
-
+        
         #region Events
 
         [FoldoutGroup("Events"), BoxGroup("Events/Group", ShowLabel = false)] 
@@ -90,10 +96,25 @@ namespace RoundKnights
             public Resource.SaveFile[] Resources;
         }
         
-        public void Load()
+        public void Load(InitialCondition condition)
         {
             int size = Enum.GetValues(typeof(ResourceType)).Length;
-            for (int i = 0; i < size; i++) m_Resources.Add(new Resource((ResourceType)i));
+            for (int i = 0; i < size; i++)
+            {
+                var type = (ResourceType)i;
+                var resId = Array.FindIndex(condition.Resources, x => x.Type == type);
+
+                m_Resources.Add(resId < 0 
+                    ? new Resource((ResourceType)i) 
+                    : new Resource(condition.Resources[resId]));
+            }
+
+            size = condition.Resources.Length;
+            for (int i = 0; i < size; i++)
+            {
+                var res = condition.Resources[i];
+                m_Resources[(int)res.Type] = new(res);
+            }
         }
 
         public void Load(SaveFile saveFile)

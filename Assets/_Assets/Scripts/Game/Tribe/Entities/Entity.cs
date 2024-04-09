@@ -4,12 +4,21 @@ using UnityEngine;
 
 namespace RoundKnights
 {
-    public abstract class Entity : MonoBehaviour
+    public abstract class Entity : PoolObject
     {
         [field: SerializeField, InlineEditor] public EntityConfig Config { get; private set; }
+
+        public override string PoolKey => Config.PoolName;
+
+        public event Action<Entity> On_Killed;
+
+        protected virtual void OnKilled()
+        {
+            On_Killed?.Invoke(this);
+            On_Killed = null;
+        }
         
         #region Save&Load
-        public Transform Trs { get; private set; }
         public EntityMovement Movement { get; private set; }
         public EntityAnimator Animator { get; private set; }
         public HealthStat Health { get; private set; }
@@ -23,6 +32,30 @@ namespace RoundKnights
 
         public bool Loaded { get; private set; }
         protected virtual Type SaveFileType => typeof(SaveFile);
+
+        protected override void OnCreate()
+        {
+            Movement = GetComponent<EntityMovement>();
+            Animator = GetComponentInChildren<EntityAnimator>();
+            Health = GetComponent<HealthStat>();
+
+            Health.On_Empty += OnKilled;
+        }
+
+        public virtual void Load()
+        {
+#if UNITY_EDITOR
+            if (Loaded)
+            {
+                Debug.LogError($"Trying to load entity {name} twice this is not allowed");
+                return;
+            }
+#endif
+            Movement.Load();
+            Health.Load();
+
+            Loaded = true;
+        }
         
         public virtual void Load(SaveFile saveFile)
         {
@@ -33,12 +66,6 @@ namespace RoundKnights
                 return;
             }
 #endif
-            
-            Trs = transform;
-            Movement = GetComponent<EntityMovement>();
-            Animator = GetComponentInChildren<EntityAnimator>();
-            Health = GetComponent<HealthStat>();
-            
             Movement.Load(ref saveFile.Movement);
             Health.Load(saveFile.Health);
             

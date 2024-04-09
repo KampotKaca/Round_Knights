@@ -8,7 +8,7 @@ namespace RoundKnights
 {
     public class TribesManager : Singleton<TribesManager>, ISavedObject
     {
-        [SerializeField, InlineEditor] TribesManagerConfig config;
+        [SerializeField, InlineEditor] TribesManagerConfig m_Config;
         
         #region Tribes
 
@@ -22,13 +22,9 @@ namespace RoundKnights
         
         readonly List<Tribe> m_Tribes = new();
 
-        void CreateTribe()
+        void CreateTribe(Tribe.InitialCondition condition)
         {
-            var template = config.TribeTemplate;
-            var tribe = Instantiate(template, transform);
-            var condition = config.TribeInitialCondition;
-            
-            condition.IdentifierKey = Guid.NewGuid().ToString();
+            var tribe = Instantiate(m_Config.TribePrefab, transform);
             
             tribe.Load(condition);
             m_Tribes.Add(tribe);
@@ -36,8 +32,7 @@ namespace RoundKnights
 
         void CreateTribe(Tribe.SaveFile saveFile)
         {
-            var template = config.TribeTemplate;
-            var tribe = Instantiate(template, transform);
+            var tribe = Instantiate(m_Config.TribePrefab, transform);
             tribe.Load(saveFile);
             m_Tribes.Add(tribe);
         }
@@ -58,7 +53,14 @@ namespace RoundKnights
         
         public void LoadDefault()
         {
-            CreateTribe();
+            var conditions = m_Config.SortedConditions(1);
+            if (conditions == null)
+            {
+                Application.Quit();
+                return;
+            }
+            
+            CreateTribe(conditions[0]);
         }
 
         public void LoadFromSaveFile(object saveFile)

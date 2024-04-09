@@ -6,6 +6,14 @@ namespace RoundKnights
 {
     public class Resource
     {
+        [Serializable]
+        public struct InitialCondition
+        {
+            public ResourceType Type;
+            public ulong Amount;
+            public ulong Limit;
+        }
+        
         #region Values
 
         [ShowInInspector, ReadOnly, BoxGroup("Resource", ShowLabel = false)]
@@ -25,9 +33,9 @@ namespace RoundKnights
 
         #region Events
 
-        public event Action<ulong, bool> e_OnResourceChanged;
-        public event Action<ulong, bool> e_OnLimitChanged;
-        public event Action<ulong> e_OnLimitOverflow;
+        public event Action<ulong, bool> On_ResourceChanged;
+        public event Action<ulong, bool> On_LimitChanged;
+        public event Action<ulong> On_LimitOverflow;
         
         #endregion
         
@@ -42,51 +50,44 @@ namespace RoundKnights
 
         #region Constructors
 
-        public Resource(ResourceType type)
+        public Resource(ResourceType type, bool allowLimitOverflow = false)
         {
             Type = type;
             Amount = 0;
             Limit = long.MaxValue;
-            AllowLimitOverflow = false;
+            AllowLimitOverflow = allowLimitOverflow;
         }
 
-        public Resource(ResourceType type, ulong amount)
+        public Resource(ResourceType type, ulong amount, bool allowLimitOverflow = false)
         {
             Type = type;
             Amount = amount;
             Limit = long.MaxValue;
-            AllowLimitOverflow = false;
+            AllowLimitOverflow = allowLimitOverflow;
         }
         
-        public Resource(ResourceType type, ulong amount, ulong limit)
-        {
-            Type = type;
-            Amount = amount;
-            Limit = limit;
-            AllowLimitOverflow = false;
-        }
 
-        public Resource(ResourceType type, ulong amount, ulong limit, bool allowLimitOverflow)
+        public Resource(ResourceType type, ulong amount, ulong limit, bool allowLimitOverflow = false)
         {
             Type = type;
             Amount = amount;
             Limit = limit;
             AllowLimitOverflow = allowLimitOverflow;
         }
-
-        public Resource(ResourceType type, ref SaveFile saveFile)
-        {
-            Type = type;
-            Amount = saveFile.Amount;
-            Limit = saveFile.Limit;
-            AllowLimitOverflow = false;
-        }
         
-        public Resource(ResourceType type, ref SaveFile saveFile, bool allowLimitOverflow)
+        public Resource(ResourceType type, ref SaveFile saveFile, bool allowLimitOverflow = false)
         {
             Type = type;
             Amount = saveFile.Amount;
             Limit = saveFile.Limit;
+            AllowLimitOverflow = allowLimitOverflow;
+        }
+
+        public Resource(InitialCondition condition, bool allowLimitOverflow = false)
+        {
+            Type = condition.Type;
+            Amount = condition.Amount;
+            Limit = condition.Limit;
             AllowLimitOverflow = allowLimitOverflow;
         }
         
@@ -102,7 +103,7 @@ namespace RoundKnights
             if (!HasEnoughSpace(amount) || amount == 0) return false;
 
             Amount += amount;
-            e_OnResourceChanged?.Invoke(amount, true);
+            On_ResourceChanged?.Invoke(amount, true);
 
             return true;
         }
@@ -112,7 +113,7 @@ namespace RoundKnights
             if (!HasEnough(amount) || amount == 0) return false;
 
             Amount -= amount;
-            e_OnResourceChanged?.Invoke(amount, false);
+            On_ResourceChanged?.Invoke(amount, false);
 
             return true;
         }
@@ -130,7 +131,7 @@ namespace RoundKnights
             if (amount == 0) return false;
 
             Limit += amount;
-            e_OnLimitChanged?.Invoke(amount, true);
+            On_LimitChanged?.Invoke(amount, true);
 
             return true;
         }
@@ -153,13 +154,13 @@ namespace RoundKnights
             if (change > 0)
             {
                 Limit -= change;
-                e_OnLimitChanged?.Invoke(amount, false);
+                On_LimitChanged?.Invoke(amount, false);
 
                 if (Limit < Amount && !AllowLimitOverflow)
                 {
                     overflowAmount = Amount - Limit;
                     Remove(overflowAmount);
-                    e_OnLimitOverflow?.Invoke(overflowAmount);
+                    On_LimitOverflow?.Invoke(overflowAmount);
                 }
             }
 

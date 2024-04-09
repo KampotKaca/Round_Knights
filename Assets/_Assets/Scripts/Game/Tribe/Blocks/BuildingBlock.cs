@@ -1,11 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RoundKnights
 {
     public class BuildingBlock : MonoBehaviour
     {
+        [System.Serializable]
+        public struct InitialCondition
+        {
+            
+        }
+        
         #region Save&Load
 
         [System.Serializable]
@@ -14,6 +18,11 @@ namespace RoundKnights
             
         }
 
+        public void Load(InitialCondition condition)
+        {
+            
+        }
+        
         public void Load(SaveFile saveFile)
         {
             

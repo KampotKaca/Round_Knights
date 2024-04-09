@@ -10,7 +10,7 @@ namespace RoundKnights
 
         protected override void OnAwakeEvent()
         {
-            inputReader.ResetEvents();
+            inputReader.Init();
             populateSaves();
             SaveManager.LoadAll(saveIdentifier);
             Environment.Instance.Load();

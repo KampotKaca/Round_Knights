@@ -29,7 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 603340837649594388}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -161,10 +161,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 15000
+  m_text: 999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7f662c4a53a82f04b886317f8053c8f5, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 124494364eb6a794a85fd6e70faa3a7b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4cdf3b314ca84c3429f4483af2394efb, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b59b257f9b78d5d4eb464f68dadbcb5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -1,4 +1,6 @@
 //#define EDIT_MODE
+
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -44,7 +46,7 @@ namespace RoundKnights
         }
         #endregion
         
-        public Transform Target { get; private set; }
+        [ShowInInspector, ReadOnly] public Transform Target { get; private set; }
 
         void LateUpdate()
         {
@@ -99,5 +101,18 @@ namespace RoundKnights
                 Pitch = defaultPitch;
             }
         }
+
+        #region Editor
+
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            if (!Target) return;
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(Target.position, .5f);
+        }
+#endif
+
+        #endregion
     }
 }

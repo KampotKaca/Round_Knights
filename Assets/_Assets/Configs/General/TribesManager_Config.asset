@@ -12,22 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f723504366956b44ebd91244fbc760a5, type: 3}
   m_Name: TribesManager_Config
   m_EditorClassIdentifier: 
-  tribeTemplates:
-  - {fileID: 4033724136406852853, guid: 7be940d4edabbd146bec56e799aa1bb7, type: 3}
+  <TribePrefab>k__BackingField: {fileID: 4033724136406852853, guid: 7be940d4edabbd146bec56e799aa1bb7, type: 3}
   tribeInitialConditions:
-  - IdentifierKey: 
-    TribeName: Tribe
+  - TribeName: Base_Tribe
     Resources:
-      SavedResources:
-      - Identifier: Gold
-        Amount: 100
+      Resources:
+      - Type: 0
+        Amount: 1000
         Limit: 0
-      - Identifier: Wood
-        Amount: 100
+      - Type: 1
+        Amount: 1000
         Limit: 0
-      - Identifier: Meat
-        Amount: 100
+      - Type: 2
+        Amount: 1000
         Limit: 0
-      - Identifier: Stone
-        Amount: 100
+      - Type: 3
+        Amount: 1000
         Limit: 0

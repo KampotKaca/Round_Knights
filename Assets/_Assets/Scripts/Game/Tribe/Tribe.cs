@@ -6,16 +6,25 @@ namespace RoundKnights
 {
     public class Tribe : MonoBehaviour
     {
+        [Serializable]
+        public struct InitialCondition
+        {
+            public string TribeName;
+            public ResourceBlock.InitialCondition Resources;
+            public BuildingBlock.InitialCondition Buildings;
+            public EntityBlock.InitialCondition Entities;
+        }
+        
         [field: SerializeField, InlineEditor] public TribeConfig Config { get; private set; }
         public ResourceBlock ResourceBlock { get; private set; }
         public BuildingBlock BuildingBlock { get; private set; }
         public EntityBlock EntityBlock { get; private set; }
-
+        
         #region Save&Load
         [Serializable]
         public struct SaveFile
         {
-            [ReadOnly] public string IdentifierKey;
+            public string IdentifierKey;
             public string TribeName;
             public ResourceBlock.SaveFile Resources;
             public BuildingBlock.SaveFile Buildings;
@@ -25,6 +34,20 @@ namespace RoundKnights
         public string IdentifierKey { get; private set; }
         public string TribeName { get; private set; }
 
+        public void Load(InitialCondition condition)
+        {
+            IdentifierKey = Guid.NewGuid().ToString();
+            TribeName = condition.TribeName;
+            
+            name = TribeName;
+            
+            collect();
+            
+            ResourceBlock.Load(condition.Resources);
+            BuildingBlock.Load(condition.Buildings);
+            EntityBlock.Load(condition.Entities);
+        }
+        
         public void Load(SaveFile saveFile)
         {
             IdentifierKey = saveFile.IdentifierKey;
@@ -32,9 +55,7 @@ namespace RoundKnights
 
             name = TribeName;
 
-            ResourceBlock = GetComponent<ResourceBlock>();
-            BuildingBlock = GetComponent<BuildingBlock>();
-            EntityBlock = GetComponent<EntityBlock>();
+            collect();
             
             ResourceBlock.Load(saveFile.Resources);
             BuildingBlock.Load(saveFile.Buildings);
@@ -52,6 +73,13 @@ namespace RoundKnights
                 Entities = EntityBlock.GetSaveFile(),
             };
             return save;
+        }
+        
+        void collect()
+        {
+            ResourceBlock = GetComponent<ResourceBlock>();
+            BuildingBlock = GetComponent<BuildingBlock>();
+            EntityBlock = GetComponent<EntityBlock>();
         }
         #endregion
     }

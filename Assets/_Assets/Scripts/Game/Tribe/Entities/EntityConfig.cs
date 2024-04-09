@@ -10,6 +10,8 @@ namespace RoundKnights
         [field: SerializeField, TabGroup("tab1", "General"), TextArea] 
         public string Description { get; private set; } = "Entity is Entity";
         [field: SerializeField, TabGroup("tab1", "General")] 
+        public string PoolName { get; private set; } = "Pool";
+        [field: SerializeField, TabGroup("tab1", "General")] 
         public Entity Prefab { get; private set; }
         
         [field: SerializeField, InlineEditor, TabGroup("tab1", "Stats", SdfIconType.BarChartLineFill, TextColor = "blue")] 

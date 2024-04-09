@@ -8,19 +8,19 @@ namespace RoundKnights
     public class CameraManager : Singleton<CameraManager>, ISavedObject
     {
         [SerializeField, FoldoutGroup("General"), BoxGroup("General/Group", ShowLabel = false)] 
-        InputReader inputReader;
+        InputReader m_InputReader;
         [SerializeField, BoxGroup("General/Group")] 
-        RtsCamera Camera;
+        RtsCamera m_Camera;
         [SerializeField, BoxGroup("General/Group"), InlineEditor] 
-        CameraManagerConfig config;
+        CameraManagerConfig m_Config;
         
         void Load(bool loadDefaults)
         {
-            Camera.Load(loadDefaults);
+            m_Camera.Load(loadDefaults);
 
-            inputReader.On_CameraMove += OnMoveEvent;
-            inputReader.On_CameraRotate += OnRotateEvent;
-            inputReader.On_CameraZoom += OnZoomEvent;
+            m_InputReader.On_CameraMove += OnMoveEvent;
+            m_InputReader.On_CameraRotate += OnRotateEvent;
+            m_InputReader.On_CameraZoom += OnZoomEvent;
             
             Loaded = true;
         }
@@ -80,11 +80,11 @@ namespace RoundKnights
             }
 #endif
             var save = (SaveFile)saveFile;
-            Camera.Distance = save.Distance;
-            Camera.Yaw = save.Yaw;
-            Camera.Pitch = save.Pitch;
+            m_Camera.Distance = save.Distance;
+            m_Camera.Yaw = save.Yaw;
+            m_Camera.Pitch = save.Pitch;
             Load(false);
-            Camera.Target.position = save.TargetPosition.Value;
+            m_Camera.Target.position = save.TargetPosition.Value;
         }
 
         public object GetSaveFile()
@@ -98,11 +98,11 @@ namespace RoundKnights
 #endif
             var save = new SaveFile
             {
-                Distance = Camera.Distance,
-                Yaw = Camera.Yaw,
-                Pitch = Camera.Pitch,
+                Distance = m_Camera.Distance,
+                Yaw = m_Camera.Yaw,
+                Pitch = m_Camera.Pitch,
             };
-            save.TargetPosition.SetValue(Camera.Target.position);
+            save.TargetPosition.SetValue(m_Camera.Target.position);
 
             return save;
         }
@@ -124,20 +124,20 @@ namespace RoundKnights
 
         void OnZoomEvent(float zoom)
         {
-            Camera.Distance += zoom * config.ZoomSpeed * Time.deltaTime;
+            m_Camera.Distance += zoom * m_Config.ZoomSpeed * Time.deltaTime;
         }
         
         void Update()
         {
-            Camera.Target.position = GetTargetPosition();
-            Camera.Yaw += config.YawSpeed * m_RotateValue.x * Time.deltaTime;
-            Camera.Pitch += config.PitchSpeed * m_RotateValue.y * Time.deltaTime;
+            m_Camera.Target.position = GetTargetPosition();
+            m_Camera.Yaw += m_Config.YawSpeed * m_RotateValue.x * Time.deltaTime;
+            m_Camera.Pitch += m_Config.PitchSpeed * m_RotateValue.y * Time.deltaTime;
         }
 
         Vector3 GetTargetPosition()
         {
-            var targetPos = Camera.Target.position + Camera.RotateDirection(m_MoveValue.ToV3()) 
-                                    * (Camera.Distance * config.MoveSpeedPerDistance * Time.deltaTime);
+            var targetPos = m_Camera.Target.position + m_Camera.RotateDirection(m_MoveValue.ToV3()) 
+                                    * (m_Camera.Distance * m_Config.MoveSpeedPerDistance * Time.deltaTime);
             bool isInBounds = m_EdgeBounds.Count == 0;
             for (int i = 0; i < m_EdgeBounds.Count; i++)
                 isInBounds = isInBounds || m_EdgeBounds[i].Contains(targetPos);
