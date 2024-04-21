@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace RoundKnights
 {
     [CreateAssetMenu(menuName = "RoundKnights/Settings/InputReader", fileName = "InputReader")]
-    public class InputReader : ScriptableObject, Input_Map.IGameplayActions, Input_Map.IUIActions
+    public class InputReader : SingletonScriptableObject<InputReader>, Input_Map.IGameplayActions, Input_Map.IUIActions
     {
         #region Variables
 

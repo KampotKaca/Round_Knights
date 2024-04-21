@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48a92350f64bfea44a588e1cc0030181, type: 3}
-  m_Name: Spearman_Health_Config
+  m_Name: LordsManor_Health
   m_EditorClassIdentifier: 
   <Limit>k__BackingField: 100
   <RegenerationSpeed>k__BackingField: 1.5

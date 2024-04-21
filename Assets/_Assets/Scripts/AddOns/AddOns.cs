@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RoundKnights
 {
+    public delegate void Execute<in T>(T exec);
     public static class AddOns
     {
         public static bool ToBool(this int val) => val == 1;
@@ -72,6 +74,19 @@ namespace RoundKnights
                 y = v1.y / v2.y,
                 z = v1.z / v2.z,
             };
+        }
+        
+        public static void SendGlobalMessage(string functionName)
+        {
+            var roots = SceneManager.GetActiveScene().GetRootGameObjects();
+            foreach (var root in roots) send(root.transform);
+            return;
+
+            void send(Transform target)
+            {
+                target.SendMessage(functionName, SendMessageOptions.DontRequireReceiver);
+                for (int i = 0; i < target.childCount; i++) send(target.GetChild(i));
+            }
         }
 
         #region Shorts

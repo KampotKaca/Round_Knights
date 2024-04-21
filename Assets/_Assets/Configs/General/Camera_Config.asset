@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad00531fe155d7345b42b279eac0a3f1, type: 3}
   m_Name: Camera_Config
   m_EditorClassIdentifier: 
-  <MoveSpeed>k__BackingField: 5
+  <MoveSpeedPerDistance>k__BackingField: 1.5
   <PitchSpeed>k__BackingField: 20
   <YawSpeed>k__BackingField: 60
-  <ZoomSpeed>k__BackingField: 20
+  <ZoomSpeed>k__BackingField: 250

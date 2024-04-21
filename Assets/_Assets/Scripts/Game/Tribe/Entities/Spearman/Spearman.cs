@@ -10,7 +10,7 @@ namespace RoundKnights
 
         #region Save&Load
 
-        protected override Type SaveFileType => typeof(SpearmanSave);
+        protected override Type FileType => typeof(SpearmanSave);
 
         [Serializable]
         public class SpearmanSave : SaveFile

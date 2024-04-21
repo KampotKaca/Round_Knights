@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,12 +9,13 @@ namespace RoundKnights
     [CreateAssetMenu(menuName = "RoundKnights/General/TribesManager", fileName = "TribesManager_Config")]
     public class TribesManagerConfig : ScriptableObject
     {
-        [field: SerializeField] public Tribe TribePrefab { get; private set; }
-        [SerializeField] Tribe.InitialCondition[] tribeInitialConditions;
+        [SerializeField, InlineEditor] Tribe[] m_Tribes;
 
-        public int ConditionCount => tribeInitialConditions.Length;
+        public int ConditionCount => m_Tribes.Length;
+
+        public Tribe FindTribeBy(Predicate<Tribe> exec) => Array.Find(m_Tribes, exec);
         
-        public List<Tribe.InitialCondition> SortedConditions(int tribeCount)
+        public List<Tribe> SortedConditions(int tribeCount)
         {
             if (ConditionCount < tribeCount)
             {
@@ -21,8 +23,8 @@ namespace RoundKnights
                 return null;
             }
             
-            List<Tribe.InitialCondition> allConditions = new(tribeInitialConditions);
-            List<Tribe.InitialCondition> targetConditions = new();
+            List<Tribe> allConditions = new(m_Tribes);
+            List<Tribe> targetConditions = new();
 
             for (int i = 0; i < tribeCount; i++)
             {

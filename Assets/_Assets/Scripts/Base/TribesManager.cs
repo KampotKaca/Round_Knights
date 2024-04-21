@@ -22,17 +22,17 @@ namespace RoundKnights
         
         readonly List<Tribe> m_Tribes = new();
 
-        void CreateTribe(Tribe.InitialCondition condition)
+        void CreateTribe(Tribe prefab)
         {
-            var tribe = Instantiate(m_Config.TribePrefab, transform);
+            var tribe = Instantiate(prefab, transform);
             
-            tribe.Load(condition);
+            tribe.Load();
             m_Tribes.Add(tribe);
         }
 
-        void CreateTribe(Tribe.SaveFile saveFile)
+        void CreateTribe(Tribe prefab, Tribe.SaveFile saveFile)
         {
-            var tribe = Instantiate(m_Config.TribePrefab, transform);
+            var tribe = Instantiate(prefab, transform);
             tribe.Load(saveFile);
             m_Tribes.Add(tribe);
         }
@@ -53,20 +53,20 @@ namespace RoundKnights
         
         public void LoadDefault()
         {
-            var conditions = m_Config.SortedConditions(1);
-            if (conditions == null)
+            var tribes = m_Config.SortedConditions(1);
+            if (tribes == null)
             {
                 Application.Quit();
                 return;
             }
             
-            CreateTribe(conditions[0]);
+            CreateTribe(tribes[0]);
         }
 
         public void LoadFromSaveFile(object saveFile)
         {
             var save = (SaveFile)saveFile;
-            foreach (var tribe in save.Tribes) CreateTribe(tribe);
+            foreach (var tribeSave in save.Tribes) CreateTribe(m_Config.FindTribeBy(x => x.TribeName == tribeSave.TribeName));
         }
 
         public object GetSaveFile()

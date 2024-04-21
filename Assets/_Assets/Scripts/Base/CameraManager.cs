@@ -8,8 +8,6 @@ namespace RoundKnights
     public class CameraManager : Singleton<CameraManager>, ISavedObject
     {
         [SerializeField, FoldoutGroup("General"), BoxGroup("General/Group", ShowLabel = false)] 
-        InputReader m_InputReader;
-        [SerializeField, BoxGroup("General/Group")] 
         RtsCamera m_Camera;
         [SerializeField, BoxGroup("General/Group"), InlineEditor] 
         CameraManagerConfig m_Config;
@@ -18,9 +16,9 @@ namespace RoundKnights
         {
             m_Camera.Load(loadDefaults);
 
-            m_InputReader.On_CameraMove += OnMoveEvent;
-            m_InputReader.On_CameraRotate += OnRotateEvent;
-            m_InputReader.On_CameraZoom += OnZoomEvent;
+            InputReader.Instance.On_CameraMove += OnMoveEvent;
+            InputReader.Instance.On_CameraRotate += OnRotateEvent;
+            InputReader.Instance.On_CameraZoom += OnZoomEvent;
             
             Loaded = true;
         }

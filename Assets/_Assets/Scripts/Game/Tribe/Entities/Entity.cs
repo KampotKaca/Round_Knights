@@ -31,7 +31,7 @@ namespace RoundKnights
         }
 
         public bool Loaded { get; private set; }
-        protected virtual Type SaveFileType => typeof(SaveFile);
+        protected virtual Type FileType => typeof(SaveFile);
 
         protected override void OnCreate()
         {
@@ -82,7 +82,7 @@ namespace RoundKnights
             }
 #endif
 
-            SaveFile saveFile = (SaveFile)Activator.CreateInstance(SaveFileType);
+            var saveFile = (SaveFile)Activator.CreateInstance(FileType);
 
             saveFile.Movement = Movement.GetSaveFile();
             saveFile.Health = Health.GetSaveFile();

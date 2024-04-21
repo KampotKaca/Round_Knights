@@ -1,6 +1,5 @@
 using System;
 using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace RoundKnights
 {
@@ -24,18 +23,12 @@ namespace RoundKnights
 
         [ShowInInspector, ReadOnly, BoxGroup("Resource")]
         public ulong Limit { get; private set; }
-        
-        [ShowInInspector, ReadOnly, BoxGroup("Resource"), HideIf(nameof(IsLimitless)),
-         Tooltip("condition is for situation when Limit is reduced and resource becomes more than limit")]
-        public bool AllowLimitOverflow { get; private set; }
 
         #endregion
 
         #region Events
 
         public event Action<ulong, bool> On_ResourceChanged;
-        public event Action<ulong, bool> On_LimitChanged;
-        public event Action<ulong> On_LimitOverflow;
         
         #endregion
         
@@ -50,45 +43,40 @@ namespace RoundKnights
 
         #region Constructors
 
-        public Resource(ResourceType type, bool allowLimitOverflow = false)
+        public Resource(ResourceType type)
         {
             Type = type;
             Amount = 0;
             Limit = long.MaxValue;
-            AllowLimitOverflow = allowLimitOverflow;
         }
 
-        public Resource(ResourceType type, ulong amount, bool allowLimitOverflow = false)
+        public Resource(ResourceType type, ulong amount)
         {
             Type = type;
             Amount = amount;
             Limit = long.MaxValue;
-            AllowLimitOverflow = allowLimitOverflow;
         }
         
 
-        public Resource(ResourceType type, ulong amount, ulong limit, bool allowLimitOverflow = false)
+        public Resource(ResourceType type, ulong amount, ulong limit)
         {
             Type = type;
             Amount = amount;
             Limit = limit;
-            AllowLimitOverflow = allowLimitOverflow;
         }
         
-        public Resource(ResourceType type, ref SaveFile saveFile, bool allowLimitOverflow = false)
+        public Resource(ResourceType type, ref SaveFile saveFile)
         {
             Type = type;
             Amount = saveFile.Amount;
             Limit = saveFile.Limit;
-            AllowLimitOverflow = allowLimitOverflow;
         }
 
-        public Resource(InitialCondition condition, bool allowLimitOverflow = false)
+        public Resource(InitialCondition condition)
         {
             Type = condition.Type;
             Amount = condition.Amount;
             Limit = condition.Limit;
-            AllowLimitOverflow = allowLimitOverflow;
         }
         
         #endregion
@@ -114,55 +102,6 @@ namespace RoundKnights
 
             Amount -= amount;
             On_ResourceChanged?.Invoke(amount, false);
-
-            return true;
-        }
-
-        public bool AddLimit(ulong amount)
-        {
-            if (IsLimitless)
-            {
-#if UNITY_EDITOR
-                Debug.LogError("Trying to change limit of limitless resource");
-#endif
-                return false;
-            }
-
-            if (amount == 0) return false;
-
-            Limit += amount;
-            On_LimitChanged?.Invoke(amount, true);
-
-            return true;
-        }
-
-        public bool RemoveLimit(ulong amount, out ulong overflowAmount)
-        {
-            overflowAmount = 0;
-
-            if (IsLimitless)
-            {
-#if UNITY_EDITOR
-                Debug.LogError("Trying to change limit of limitless resource");
-#endif
-                return false;
-            }
-
-            if (amount == 0) return false;
-
-            var change = Math.Min(Limit, amount);
-            if (change > 0)
-            {
-                Limit -= change;
-                On_LimitChanged?.Invoke(amount, false);
-
-                if (Limit < Amount && !AllowLimitOverflow)
-                {
-                    overflowAmount = Amount - Limit;
-                    Remove(overflowAmount);
-                    On_LimitOverflow?.Invoke(overflowAmount);
-                }
-            }
 
             return true;
         }

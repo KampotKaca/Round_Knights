@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db15f3dab10dbd48a1a9d45d8db523a, type: 3}
-  m_Name: EntityBlock
+  m_Script: {fileID: 11500000, guid: 6acc1a5bac329a144b48a756908fc5a1, type: 3}
+  m_Name: BaseTribe_BuildingBlock
   m_EditorClassIdentifier: 
-  m_Entities:
-  - {fileID: 5703602451126235516, guid: c728a39e3d3f1434da62212dca8a2d6b, type: 3}
+  m_BuildingPrefabs:
+  - {fileID: 4859077284480938167, guid: 84cdbee22932b3849abbb64c1bfd44be, type: 3}

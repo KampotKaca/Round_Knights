@@ -6,14 +6,20 @@ namespace RoundKnights
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField] string saveIdentifier = "Level";
-        [field: SerializeField] InputReader inputReader;
 
+        public const string AFTER_LOAD_MESSAGE = "OnAfterLoadMessage";
+        
         protected override void OnAwakeEvent()
         {
-            inputReader.Init();
+            InputReader.Instance.ResetEvents();
+            InputReader.Instance.Init();
+            
+            Environment.Instance.Load();
+            
             populateSaves();
             SaveManager.LoadAll(saveIdentifier);
-            Environment.Instance.Load();
+            
+            AddOns.SendGlobalMessage(AFTER_LOAD_MESSAGE);
         }
 
         [Button]
@@ -23,7 +29,7 @@ namespace RoundKnights
             SaveManager.SaveAll(saveIdentifier);
         }
 
-        void populateSaves()
+        static void populateSaves()
         {
             SaveManager.SearchParents.Clear();
             SaveManager.SearchParents.Add(Environment.Instance.transform);

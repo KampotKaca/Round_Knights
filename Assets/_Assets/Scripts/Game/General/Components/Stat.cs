@@ -23,7 +23,7 @@ namespace RoundKnights
         /// <summary>
         /// Amount Is Number
         /// </summary>
-        [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public float CurrentAmount => Current * Config.Limit;
+        [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public float CurrentAmount => Config ? Current * Config.Limit : 0;
         [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public bool IsEmpty => Mathf.Approximately(Current, 0);
         [BoxGroup("Info/Group"), ShowInInspector, ReadOnly] public bool IsFull => Mathf.Approximately(Current, 1);
         

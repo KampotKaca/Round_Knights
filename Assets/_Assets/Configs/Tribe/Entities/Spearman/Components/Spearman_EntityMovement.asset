@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f723504366956b44ebd91244fbc760a5, type: 3}
-  m_Name: TribesManager_Config
+  m_Script: {fileID: 11500000, guid: 8a997670315a371419b755eab84ce4c8, type: 3}
+  m_Name: Spearman_EntityMovement
   m_EditorClassIdentifier: 
-  m_Tribes:
-  - {fileID: 4033724136406852853, guid: 7be940d4edabbd146bec56e799aa1bb7, type: 3}
+  <Speed>k__BackingField: 5
+  <AngularSpeed>k__BackingField: 360
+  <Acceleration>k__BackingField: 12

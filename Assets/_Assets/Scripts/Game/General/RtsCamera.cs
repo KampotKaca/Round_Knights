@@ -22,6 +22,9 @@ namespace RoundKnights
         [SerializeField, BoxGroup("Limits/Group")] 
         Vector2 distanceLimit = new(2f, 80f);
         
+        [SerializeField, BoxGroup("Limits/Group")] 
+        float lerp = 20f;
+
         #region Controls
         float m_Pitch;
         public float Pitch 
@@ -38,11 +41,12 @@ namespace RoundKnights
         }
 
         float m_Distance;
+        float m_TargetDistance;
 
         public float Distance
         {
-            get => m_Distance;
-            set => m_Distance = Mathf.Clamp(value, distanceLimit.x, distanceLimit.y);
+            get => m_TargetDistance;
+            set => m_TargetDistance = Mathf.Clamp(value, distanceLimit.x, distanceLimit.y);
         }
         #endregion
         
@@ -55,7 +59,8 @@ namespace RoundKnights
             Yaw = defaultYaw;
             Pitch = defaultPitch;
 #endif
-            
+
+            m_Distance = Mathf.Lerp(m_Distance, m_TargetDistance, lerp * Time.deltaTime);
             var off = CalculateOffset();
 
             var trs = transform;
@@ -99,6 +104,8 @@ namespace RoundKnights
                 Distance = defaultDistance;
                 Yaw = defaultYaw;
                 Pitch = defaultPitch;
+
+                m_Distance = Distance;
             }
         }
 

@@ -11,7 +11,6 @@ namespace RoundKnights
 
         ResourceBlock m_Block;
         ResourceType m_Type;
-        Resource m_Resource;
         
         public void Reload(ResourceBlock targetBlock, ResourceType displayType)
         {
@@ -29,18 +28,18 @@ namespace RoundKnights
         
         void clearEvents()
         {
-            if (m_Resource != null)
+            if (m_Block)
             {
-                m_Resource.On_ResourceChanged -= onResourceChanged;
-                m_Resource.On_LimitChanged -= onLimitChanged;
+                m_Block.On_Change.RemoveListener(onChanged);
             }
         }
         
         void setEvents()
         {
-            m_Resource = m_Block.GetResource(m_Type);
-            m_Resource.On_ResourceChanged += onResourceChanged;
-            m_Resource.On_LimitChanged += onLimitChanged;
+            if (m_Block)
+            {
+                m_Block.On_Change.AddListener(onChanged);
+            }
         }
         
         void OnDestroy()
@@ -50,19 +49,15 @@ namespace RoundKnights
         
         #endregion
 
-        void onResourceChanged(ulong change, bool isPositive)
-        {
-            updateVisual();
-        }
-        
-        void onLimitChanged(ulong change, bool isPositive)
+        void onChanged()
         {
             updateVisual();
         }
 
         void updateVisual()
         {
-            m_AmountText.text = m_Resource.Amount.ToShort();
+            var data = m_Block.GetResourceData(m_Type);
+            m_AmountText.text = $"{data.Amount.ToShort()} / {data.Limit.ToShort()}";
         }
     }
 }

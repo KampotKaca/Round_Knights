@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8545747294622410388}
   - component: {fileID: -8361784963058095039}
   m_Layer: 0
-  m_Name: TribeTemplate
+  m_Name: Base_Tribe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,13 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8146cf02b4f7dfc4e8af61fd536df541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  e_OnResourceChange:
-    m_PersistentCalls:
-      m_Calls: []
-  e_OnLimitChange:
-    m_PersistentCalls:
-      m_Calls: []
-  e_OnLimitOverflow:
+  On_Change:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &8545747294622410388
@@ -94,3 +88,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d9e314946f300488ac80d5b5543831, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Config: {fileID: 11400000, guid: bdacc604b3293bf4093b6691ed646465, type: 2}

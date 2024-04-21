@@ -10,9 +10,6 @@ namespace RoundKnights
         public struct InitialCondition
         {
             public string TribeName;
-            public ResourceBlock.InitialCondition Resources;
-            public BuildingBlock.InitialCondition Buildings;
-            public EntityBlock.InitialCondition Entities;
         }
         
         [field: SerializeField, InlineEditor] public TribeConfig Config { get; private set; }
@@ -26,38 +23,35 @@ namespace RoundKnights
         {
             public string IdentifierKey;
             public string TribeName;
-            public ResourceBlock.SaveFile Resources;
             public BuildingBlock.SaveFile Buildings;
             public EntityBlock.SaveFile Entities;
         }
 
         public string IdentifierKey { get; private set; }
-        public string TribeName { get; private set; }
+        public string TribeName => Config.TribeName;
 
-        public void Load(InitialCondition condition)
+        public void Load()
         {
             IdentifierKey = Guid.NewGuid().ToString();
-            TribeName = condition.TribeName;
             
             name = TribeName;
             
             collect();
             
-            ResourceBlock.Load(condition.Resources);
-            BuildingBlock.Load(condition.Buildings);
-            EntityBlock.Load(condition.Entities);
+            ResourceBlock.Load();
+            BuildingBlock.Load();
+            EntityBlock.Load();
         }
         
         public void Load(SaveFile saveFile)
         {
             IdentifierKey = saveFile.IdentifierKey;
-            TribeName = saveFile.TribeName;
 
             name = TribeName;
 
             collect();
             
-            ResourceBlock.Load(saveFile.Resources);
+            ResourceBlock.Load();
             BuildingBlock.Load(saveFile.Buildings);
             EntityBlock.Load(saveFile.Entities);
         }
@@ -68,7 +62,6 @@ namespace RoundKnights
             {
                 IdentifierKey = IdentifierKey,
                 TribeName = TribeName,
-                Resources = ResourceBlock.GetSaveFile(),
                 Buildings = BuildingBlock.GetSaveFile(),
                 Entities = EntityBlock.GetSaveFile(),
             };

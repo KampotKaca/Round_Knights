@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -7,12 +6,6 @@ namespace RoundKnights
 {
     public class EntityBlock : MonoBehaviour
     {
-        [System.Serializable]
-        public struct InitialCondition
-        {
-            
-        }
-
         [SerializeField, InlineEditor] EntityBlockConfig m_Config;
         
         readonly HashSet<Entity> m_Entities = new();
@@ -45,7 +38,7 @@ namespace RoundKnights
             public List<Spearman.SpearmanSave> Spearmen;
         }
 
-        public void Load(InitialCondition condition)
+        public void Load()
         {
             collect();
         }
