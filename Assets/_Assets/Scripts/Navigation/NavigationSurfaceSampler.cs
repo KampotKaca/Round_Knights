@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -32,13 +31,8 @@ namespace Navigation
 
             if (!m_Sample)
             {
-                var sceneFolderPath = Path.GetDirectoryName(gameObject.scene.path);
-                if (sceneFolderPath == null) return;
-                
-                var samplePath = Path.Combine(sceneFolderPath, $"{gameObject.scene.name}_SurfaceSample.asset");
-
                 m_Sample = ScriptableObject.CreateInstance<NavigationSample>();
-                AssetDatabase.CreateAsset(m_Sample, samplePath);
+                createAssetAtScenePath(m_Sample, "NavigationSample");
             }
 
             var bounds = collectBounds();
@@ -53,13 +47,28 @@ namespace Navigation
             var rns = FindObjectsByType<MeshRenderer>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
             List<Bounds> bounds = new();
 
-            foreach (var rend in rns) if ((m_NavigationMask.value & 1 << rend.gameObject.layer) > 0) bounds.Add(rend.bounds);
+            foreach (var rend in rns) if ((m_NavigationMask.value & NavigationLayerSample.ToBitwiseId(rend.gameObject.layer)) > 0) bounds.Add(rend.bounds);
 
             return bounds;
+        }
+
+        void createAssetAtScenePath<T>(T obj, string assetName) where T : Object
+        {
+            var sceneFolderPath = Path.GetDirectoryName(gameObject.scene.path);
+            if (sceneFolderPath == null) return;
+                
+            var samplePath = Path.Combine(sceneFolderPath, $"{gameObject.scene.name}_{assetName}.asset");
+            AssetDatabase.CreateAsset(obj, samplePath);
         }
         
         #endif
         
         #endregion
+    }
+
+    public struct MeshSample
+    {
+        public Bounds Bounds;
+        public int NavigationLayer;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Navigation
 {
-    [CreateAssetMenu(menuName = "Navigation/Sample")]
+    [CreateAssetMenu(menuName = "Navigation/Sample", fileName = "NavigationSample")]
     public class NavigationSample : ScriptableObject
     {
         [ReadOnly] public Bounds FullBounds;

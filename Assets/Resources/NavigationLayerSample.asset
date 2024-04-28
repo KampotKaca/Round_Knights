@@ -1,0 +1,110 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60b8865858a75444a10a6e19de47ccd, type: 3}
+  m_Name: NavigationLayerSample
+  m_EditorClassIdentifier: 
+  m_0:
+    LayerName: 
+    LayerWeight: 0
+  m_1:
+    LayerName: 
+    LayerWeight: 0
+  m_2:
+    LayerName: 
+    LayerWeight: 0
+  m_3:
+    LayerName: 
+    LayerWeight: 0
+  m_4:
+    LayerName: 
+    LayerWeight: 0
+  m_5:
+    LayerName: 
+    LayerWeight: 0
+  m_6:
+    LayerName: 
+    LayerWeight: 0
+  m_7:
+    LayerName: 
+    LayerWeight: 0
+  m_8:
+    LayerName: 
+    LayerWeight: 0
+  m_9:
+    LayerName: 
+    LayerWeight: 0
+  m_10:
+    LayerName: 
+    LayerWeight: 0
+  m_11:
+    LayerName: 
+    LayerWeight: 0
+  m_12:
+    LayerName: 
+    LayerWeight: 0
+  m_13:
+    LayerName: 
+    LayerWeight: 0
+  m_14:
+    LayerName: 
+    LayerWeight: 0
+  m_15:
+    LayerName: 
+    LayerWeight: 0
+  m_16:
+    LayerName: 
+    LayerWeight: 0
+  m_17:
+    LayerName: 
+    LayerWeight: 0
+  m_18:
+    LayerName: 
+    LayerWeight: 0
+  m_19:
+    LayerName: 
+    LayerWeight: 0
+  m_20:
+    LayerName: 
+    LayerWeight: 0
+  m_21:
+    LayerName: 
+    LayerWeight: 0
+  m_22:
+    LayerName: 
+    LayerWeight: 0
+  m_23:
+    LayerName: 
+    LayerWeight: 0
+  m_24:
+    LayerName: 
+    LayerWeight: 0
+  m_25:
+    LayerName: 
+    LayerWeight: 0
+  m_26:
+    LayerName: 
+    LayerWeight: 0
+  m_27:
+    LayerName: 
+    LayerWeight: 0
+  m_28:
+    LayerName: 
+    LayerWeight: 0
+  m_29:
+    LayerName: 
+    LayerWeight: 0
+  m_30:
+    LayerName: 
+    LayerWeight: 0
+  m_31:
+    LayerName: 
+    LayerWeight: 0
