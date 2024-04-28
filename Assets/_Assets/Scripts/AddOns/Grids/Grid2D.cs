@@ -6,28 +6,46 @@ namespace RoundKnights
     [DefaultExecutionOrder(-10)]
     public abstract class Grid2D<T> : MonoBehaviour
     {
+        #region Fields
+        
+        [SerializeField] bool m_AutoLoad = true;
         [SerializeField] float m_CellSize = 10f;
         [SerializeField] Vector2Int m_CellCount = new(100, 100);
-        [SerializeField] bool m_AutoLoad = true;
+        
+        #endregion
 
+        #region Accessors
+        
         public float CellSize => m_CellSize;
         public Vector2Int CellCount => m_CellCount;
-        [ShowInInspector, ReadOnly, BoxGroup("Info")] public Vector2 AreaSize { get; private set; }
-        [ShowInInspector, ReadOnly, BoxGroup("Info")] public Vector2 Corner { get; private set; }
+        
+        public T this[int x, int y] => m_Cells[x, y];
+        public T this[Vector2Int id] => m_Cells[id.x, id.y];
+        
+        #endregion
+        
+        #region InnerData
+        
+        [ShowInInspector, ReadOnly, FoldoutGroup("Info"), BoxGroup("Info/Group", ShowLabel = false)]
+        public Vector2 AreaSize { get; private set; }
+        [ShowInInspector, ReadOnly, BoxGroup("Info/Group")] 
+        public Vector2 Corner { get; private set; }
+        
+        public bool IsLoaded { get; private set; }
+        public Transform Trs { get; private set; }
+
+        float m_DivCellSize;
         
         T[,] m_Cells;
-        public T this[int x, int z] => m_Cells[x, z];
-        public T this[Vector2Int id] => m_Cells[id.x, id.y];
+        
+        #endregion
+
+        #region Load
 
         void Awake()
         {
             if(m_AutoLoad) Load();
         }
-
-        public bool IsLoaded { get; private set; }
-        public Transform Trs { get; private set; }
-
-        float m_DivCellSize;
         
         public void Load()
         {
@@ -44,6 +62,8 @@ namespace RoundKnights
             
             OnLoad();
         }
+        
+        #endregion
 
         #region Helpers
 
@@ -98,10 +118,15 @@ namespace RoundKnights
         #region Editor
 
         #if UNITY_EDITOR
+
+        [SerializeField, BoxGroup("Info/Group")] bool m_DrawGizmos;
+        [SerializeField, BoxGroup("Info/Group"), ShowIf(nameof(m_DrawGizmos))] Color m_GizmoColor = Color.blue;
         
-        void OnDrawGizmosSelected()
+        protected virtual void OnDrawGizmosSelected()
         {
-            Gizmos.color = Color.blue;
+            if(!m_DrawGizmos) return;
+            
+            Gizmos.color = m_GizmoColor;
             Vector3 corner = ToVec3(ToVec2(transform.position) - new Vector2(m_CellCount.x * m_CellSize, m_CellCount.y * m_CellSize) * .5f);
             
             //X Axis
