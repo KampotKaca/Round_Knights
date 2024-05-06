@@ -254,8 +254,8 @@ MonoBehaviour:
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
   m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.25
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 1201b397f5406f14aa356c8b5fe28700, type: 2}
   m_BuildHeightMesh: 0
@@ -770,55 +770,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Settings: []
---- !u!1 &1627239708
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1627239710}
-  - component: {fileID: 1627239709}
-  m_Layer: 0
-  m_Name: NavigationSurfaceSampler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1627239709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627239708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4500e510751274b46be470eceb7b9b35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SampleVoxelSize: 3
-  m_Sample: {fileID: 11400000, guid: 56e46280de1fb5a4bb45d61647068b2e, type: 2}
-  m_NavigationMask:
-    serializedVersion: 2
-    m_Bits: 8
---- !u!4 &1627239710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627239708}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1657052873
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,5 +1178,4 @@ SceneRoots:
   - {fileID: 1657052874}
   - {fileID: 742316918}
   - {fileID: 836163871}
-  - {fileID: 1627239710}
   - {fileID: 2080089072}
