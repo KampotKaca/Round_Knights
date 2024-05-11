@@ -37,7 +37,8 @@ namespace Navigation
             
             NavigationSample.WriteSample(m_Sample, gameObject.scene, new()
             {
-                NodeSize = m_NodeSize
+                NodeSize = m_NodeSize,
+                SurfaceParent = transform
             });
         }
 

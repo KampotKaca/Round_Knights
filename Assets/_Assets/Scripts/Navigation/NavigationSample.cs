@@ -107,5 +107,6 @@ namespace Navigation
     {
         public float NodeSize;
         public LayerMask SampleMask;
+        public Transform SurfaceParent;
     }
 }
