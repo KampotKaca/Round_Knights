@@ -35,7 +35,7 @@ namespace Navigation
                         }
                     }
 
-                    sample.m_Nodes[x * sample.m_GridDimensions.y + y] = new SurfaceNode
+                    sample.m_Nodes[x * sample.m_GridDimensions.y + y] = new()
                     {
                         IsWalkable = !wasCast
                     };

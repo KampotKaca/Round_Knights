@@ -59,6 +59,9 @@ namespace Navigation
                     Gizmos.DrawCube(center, new(m_Surface.NodeSize, 1, m_Surface.NodeSize));
                 }
             }
+            
+            Gizmos.color = Color.gray;
+            Gizmos.DrawCube(transform.position, new Vector3(m_Surface.Nodes.GetLength(0), 0, m_Surface.Nodes.GetLength(1)) * m_Surface.NodeSize);
         }
     }
 }

@@ -10,7 +10,8 @@ namespace Navigation
         {
             Transform trs = transform;
             var dir = trs.InverseTransformDirection(ray.direction);
-            ray = new Ray(ray.origin, dir);
+            var origin = trs.InverseTransformPoint(ray.origin);
+            ray = new(origin, dir);
             hitInfo = new();
             return m_Bounds.IntersectRay(ray, out _);
         }
@@ -44,15 +45,15 @@ namespace Navigation
             var min = m_Bounds.min;
             var max = m_Bounds.max;
 
-            m_BoxPoints[0] = pos + trs.TransformDirection(new Vector3(min.x, min.y, min.z));
-            m_BoxPoints[1] = pos + trs.TransformDirection(new Vector3(min.x, min.y, max.z));
-            m_BoxPoints[2] = pos + trs.TransformDirection(new Vector3(max.x, min.y, min.z));
-            m_BoxPoints[3] = pos + trs.TransformDirection(new Vector3(max.x, min.y, max.z));
+            m_BoxPoints[0] = pos + trs.TransformDirection(new(min.x, min.y, min.z));
+            m_BoxPoints[1] = pos + trs.TransformDirection(new(min.x, min.y, max.z));
+            m_BoxPoints[2] = pos + trs.TransformDirection(new(max.x, min.y, min.z));
+            m_BoxPoints[3] = pos + trs.TransformDirection(new(max.x, min.y, max.z));
             
-            m_BoxPoints[4] = pos + trs.TransformDirection(new Vector3(min.x, max.y, min.z));
-            m_BoxPoints[5] = pos + trs.TransformDirection(new Vector3(min.x, max.y, max.z));
-            m_BoxPoints[6] = pos + trs.TransformDirection(new Vector3(max.x, max.y, min.z));
-            m_BoxPoints[7] = pos + trs.TransformDirection(new Vector3(max.x, max.y, max.z));
+            m_BoxPoints[4] = pos + trs.TransformDirection(new(min.x, max.y, min.z));
+            m_BoxPoints[5] = pos + trs.TransformDirection(new(min.x, max.y, max.z));
+            m_BoxPoints[6] = pos + trs.TransformDirection(new(max.x, max.y, min.z));
+            m_BoxPoints[7] = pos + trs.TransformDirection(new(max.x, max.y, max.z));
 
             //Lower Quad
             Gizmos.DrawLine(m_BoxPoints[0], m_BoxPoints[2]);
