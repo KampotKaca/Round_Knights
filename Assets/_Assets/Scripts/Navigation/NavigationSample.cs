@@ -50,7 +50,7 @@ namespace Navigation
         public SurfaceNode this[Vector2Int id] => Nodes[id.x, id.y];
 
         public Vector3 Position(Vector2Int id) => Position((uint)id.x, (uint)id.y);
-        public Vector3 Position(uint x, uint y) => Corner + new Vector3(x * NodeSize, 0, y * NodeSize);
+        public Vector3 Position(uint x, uint y) => Corner + new Vector3((x + .5f) * NodeSize, 0, (y + .5f) * NodeSize);
 
         public bool IsInside(Vector3 position, out Vector2Int nodeId)
         {

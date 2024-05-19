@@ -12,8 +12,8 @@ namespace Navigation
     {
 #if UNITY_EDITOR
 
-        [SerializeField] float m_NodeSize;
-        [SerializeField] LayerMask m_SampleMask;
+        [SerializeField] private float m_NodeSize;
+        [SerializeField] private LayerMask m_SampleMask;
         
         [Button]
         void takeSample()
@@ -25,17 +25,17 @@ namespace Navigation
             }
             
             var samplePath = SamplePath;
-            NavigationSample m_Sample;
+            NavigationSample sample;
             
             if (AssetDatabase.AssetPathExists(samplePath))
-                m_Sample = AssetDatabase.LoadAssetAtPath<NavigationSample>(samplePath);
+                sample = AssetDatabase.LoadAssetAtPath<NavigationSample>(samplePath);
             else
             {
-                m_Sample = ScriptableObject.CreateInstance<NavigationSample>();
-                AssetDatabase.CreateAsset(m_Sample, samplePath);
+                sample = ScriptableObject.CreateInstance<NavigationSample>();
+                AssetDatabase.CreateAsset(sample, samplePath);
             }
             
-            NavigationSample.WriteSample(m_Sample, gameObject.scene, new()
+            NavigationSample.WriteSample(sample, gameObject.scene, new()
             {
                 NodeSize = m_NodeSize,
                 SurfaceParent = transform,

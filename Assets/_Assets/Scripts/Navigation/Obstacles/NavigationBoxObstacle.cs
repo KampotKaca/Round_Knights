@@ -6,40 +6,28 @@ namespace Navigation
     {
         [SerializeField] Bounds m_Bounds = new(Vector3.zero, Vector3.one);
         
-        public override bool RayCast(Ray ray, out NavigationHitInfo hitInfo)
+        public override bool Intersects(Bounds bounds, out NavigationHitInfo hitInfo)
         {
-            Transform trs = transform;
-            var dir = trs.InverseTransformDirection(ray.direction);
-            var origin = trs.InverseTransformPoint(ray.origin);
-            ray = new(origin, dir);
-            hitInfo = new();
-            return m_Bounds.IntersectRay(ray, out _);
+            redrawBoxPoints();
+            var pos = transform.position;
+            foreach(Vector3 point in m_BoxPoints)
+            {
+                if(bounds.Contains(pos + point)) return true;
+            }
+            return false;
         }
         
         public override void EncapsulateIn(ref Bounds bounds, Vector3 surfaceOffset)
         {
-            Transform trs = transform;
-            Vector3 pos = trs.position;
-            var min = m_Bounds.min;
-            var max = m_Bounds.max;
-
-            min = pos + trs.TransformDirection(min) - surfaceOffset;
-            max = pos + trs.TransformDirection(max) - surfaceOffset;
-            
-            bounds.Encapsulate(min);
-            bounds.Encapsulate(max);
+            var trs = transform;
+            redrawBoxPoints();
+            foreach(Vector3 point in m_BoxPoints) bounds.Encapsulate(trs.TransformPoint(point));
         }
 
-        #region Editor
-
-        #if UNITY_EDITOR
-
-        readonly Vector3[] m_BoxPoints = new Vector3[8];
+        private readonly Vector3[] m_BoxPoints = new Vector3[8];
         
-        protected override void OnDrawGizmos()
+        private void redrawBoxPoints()
         {
-            base.OnDrawGizmos();
-
             var trs = transform;
             Vector3 pos = trs.position;
             var min = m_Bounds.min;
@@ -54,6 +42,20 @@ namespace Navigation
             m_BoxPoints[5] = pos + trs.TransformDirection(new(min.x, max.y, max.z));
             m_BoxPoints[6] = pos + trs.TransformDirection(new(max.x, max.y, min.z));
             m_BoxPoints[7] = pos + trs.TransformDirection(new(max.x, max.y, max.z));
+        }
+        
+        #region Editor
+
+        #if UNITY_EDITOR
+
+        
+        protected override void OnDrawGizmos()
+        {
+            if(Application.isPlaying) return;
+            
+            base.OnDrawGizmos();
+
+            redrawBoxPoints();            
 
             //Lower Quad
             Gizmos.DrawLine(m_BoxPoints[0], m_BoxPoints[2]);

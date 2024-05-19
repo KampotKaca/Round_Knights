@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e37cfcd02eaaa9d43ba55e86017347a6, type: 3}
-  m_Name: NavigationTestingScene_SurfaceSample
+  m_Name: NavTestScene_SurfaceSample
   m_EditorClassIdentifier: 
-  Nodes:
+  m_Nodes:
   - IsWalkable: 0
   - IsWalkable: 0
   - IsWalkable: 0
@@ -113,5 +113,5 @@ MonoBehaviour:
   - IsWalkable: 0
   - IsWalkable: 0
   - IsWalkable: 0
-  NodeSize: 1
-  GridDimensions: {x: 10, y: 10}
+  m_NodeSize: 1
+  m_GridDimensions: {x: 10, y: 10}

@@ -12,7 +12,7 @@ namespace Navigation
             sample.m_NodeSize = settings.NodeSize;
             var samples = sampleObstacles(scene, settings.SampleMask, surfaceOffset, out var globalBounds);
             sample.m_GridDimensions = new(Mathf.CeilToInt(globalBounds.size.x / settings.NodeSize),
-                Mathf.CeilToInt(globalBounds.size.y / settings.NodeSize));
+                Mathf.CeilToInt(globalBounds.size.z / settings.NodeSize));
 
             Vector3 corner = surfaceOffset - new Vector3(sample.m_GridDimensions.x * sample.m_NodeSize * .5f, 
                 0, sample.m_GridDimensions.y * sample.m_NodeSize * .5f);
@@ -23,12 +23,13 @@ namespace Navigation
             {
                 for (int y = 0; y < sample.m_GridDimensions.y; y++)
                 {
-                    var ray = new Ray(corner + new Vector3(x * sample.m_NodeSize, 0, y * sample.m_NodeSize), Vector3.down);
+                    var bounds = new Bounds(corner + new Vector3((x + .5f) * sample.m_NodeSize, 0,
+                            (y + .5f) * sample.m_NodeSize), new(sample.m_NodeSize, 1, sample.m_NodeSize));
                     bool wasCast = false;
                     
                     foreach (var s in samples)
                     {
-                        if (s.RayCast(ray, out _))
+                        if (s.Intersects(bounds, out _))
                         {
                             wasCast = true;
                             break;
@@ -58,7 +59,7 @@ namespace Navigation
                 else id++;
             }
 
-            globalBounds = new();
+            globalBounds = new(surfaceOffset, Vector3.one);
             foreach (var obstacle in obstacles) obstacle.EncapsulateIn(ref globalBounds, surfaceOffset);
             
             return obstacles;

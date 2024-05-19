@@ -38,30 +38,23 @@ namespace Navigation
                m_Surface.GetClampedIndex(m_SearchFinish.position));
         }
 
-        [SerializeField] Color m_StartColor = Color.gray, m_FinishColor = Color.magenta;
-        
         void OnDrawGizmos()
         {
             if (m_Surface == null) return;
             
-            drawTransform(m_SearchStart, m_StartColor);
-            drawTransform(m_SearchFinish, m_FinishColor);
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireCube(transform.position, new Vector3
+                    (m_Surface.Nodes.GetLength(0), 0, m_Surface.Nodes.GetLength(1)) * m_Surface.NodeSize);
 
-            void drawTransform(Transform trs, Color col)
+            Gizmos.color = Color.red;
+            for(uint x = 0; x < m_Surface.Nodes.GetLength(0); x++)
             {
-                if (trs)
+                for(uint y = 0; y < m_Surface.Nodes.GetLength(1); y++)
                 {
-                    Gizmos.color = col;
-                    var id = m_Surface.GetClampedIndex(trs.position);
-                    var nodePosition = m_Surface.Position(id);
-
-                    var center = nodePosition + new Vector3(m_Surface.NodeSize, 0, m_Surface.NodeSize) * .5f;
-                    Gizmos.DrawCube(center, new(m_Surface.NodeSize, 1, m_Surface.NodeSize));
+                    if(m_Surface.Nodes[x, y].IsWalkable) continue;
+                    Gizmos.DrawWireCube(m_Surface.Position(x, y), Vector3.one * m_Surface.NodeSize);
                 }
             }
-            
-            Gizmos.color = Color.gray;
-            Gizmos.DrawCube(transform.position, new Vector3(m_Surface.Nodes.GetLength(0), 0, m_Surface.Nodes.GetLength(1)) * m_Surface.NodeSize);
         }
     }
 }
